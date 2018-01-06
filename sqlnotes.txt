@@ -1,0 +1,49 @@
+SQLite3:
+
+.header on: shows column names
+.schema shows schema of table
+.table lists tables
+.dump -> IDK :-(
+.exit -> exits
+
+SQLite doesn't enforce type constraints, ie: you can insert a string into a 
+column meant for integers.
+
+To order names regardless of case:
+select * from students order by name COLLATE NOCASE;	
+select * from albums order by artistID, title COLLATE NOCASE;
+---Sort albums by artist ID, for same artist ID, sort by title
+select tracks.trackID, tracks.name, album.title from tracks JOIN albums ON 
+tracks.albumID = albums.albumID order by album.title;
+
+select artists.name, albums.title from albums join artists on albums.artistid = 
+artists.artistid;
+
+Join multiple tables
+
+select artists.name, albums.title, tracks.name FROM tracs INNER JOIN albums 
+on tracks.albumid = album.albumID INNER JOIN artists ON albums.artistID
+= artists.artistsID;
+
+using where clause:
+
+select artists.name, albums.title, tracks.name FROM tracks INNER JOIN albums 
+on tracks.albumid = albums.albumid INNER JOIN artists ON albums.artistID = 
+artists.artistID  where artists.name = "Amy Winehouse" order by artists.name, 
+albums.title, tracks.name;
+
+using wildcards
+note: like is not case sensitive
+
+select artists.name, albums.title, tracks.name FROM tracks INNER JOIN albums 
+on tracks.albumid = albums.albumid INNER JOIN artists ON albums.artistID = 
+artists.artistID  where artists.name like "%Black%" order by artists.name, 
+albums.title, tracks.name;
+
+using views:
+
+create view artistlist as select artists.name as artist, albums.title as album, tracks.name as song
+from tracks INNER JOIN albums on tracks.albumid = albums.albumid INNER JOIN
+artists on albums.artistid = artists.artistid;
+
+
